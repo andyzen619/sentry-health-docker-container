@@ -1,0 +1,20 @@
+version: "3"
+
+services:
+  backend:
+    build: ./sentry-scheduler-server
+    volumes: 
+      - ./sentry-scheduler-server:/user/src/app
+    ports:
+      - 8080:8080
+
+  front-end:
+    build: ./sentry-scheduler-client
+    volumes:
+      - ./sentry-scheduler-client:/user/src/client
+      - /sentry-scheduler-client/node_modules
+    ports:
+      - 9090:9090
+    depends_on:
+      - backend
+    restart: on-failure
